@@ -1,7 +1,8 @@
 import allure
-from pages.base_page import BasePage
+
+from data import LOGIN_URL
 from locators.locators import LoginPageLocators
-from data import BASE_URL
+from pages.base_page import BasePage
 
 
 class LoginPage(BasePage):
@@ -13,8 +14,7 @@ class LoginPage(BasePage):
 
     @allure.step("Перейти на страницу входа")
     def go_to_login_page(self):
-        from pages.main_page import MainPage
-        MainPage(self.driver).click_profile()
+        self.open_url(LOGIN_URL)
         self.wait_for_element_visible(self.locators.EMAIL_INPUT)
 
     @allure.step("Ввести email")
@@ -29,6 +29,15 @@ class LoginPage(BasePage):
         element.clear()
         element.send_keys(password)
 
+    @allure.step("Нажать кнопку показать/скрыть пароль")
+    def click_show_password_button(self):
+        self.click_element(self.locators.SHOW_PASSWORD_BUTTON)
+
+    @allure.step("Проверить, что поле пароля активно (пароль показан)")
+    def is_password_field_active(self):
+        element = self.find_element(self.locators.PASSWORD_INPUT)
+        return element.get_attribute("type") == "text"
+
     @allure.step("Нажать кнопку 'Войти'")
     def click_login_button(self):
         self.click_element(self.locators.LOGIN_BUTTON)
@@ -39,10 +48,9 @@ class LoginPage(BasePage):
         self.enter_email(email)
         self.enter_password(password)
         self.click_login_button()
-        # ← ждём, что ушли со страницы логина
-        self.wait.until(lambda d: "/login" not in d.current_url)
+        self.wait_for_url_not_contains("/login")
 
     @allure.step("Нажать ссылку 'Восстановить пароль'")
     def click_forgot_password_link(self):
-        self.driver.get(f"{BASE_URL}/login")
+        self.open_url(LOGIN_URL)
         self.click_element(self.locators.FORGOT_PASSWORD_LINK)

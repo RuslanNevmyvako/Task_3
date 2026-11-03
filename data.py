@@ -4,6 +4,7 @@
 BASE_URL = "https://stellarburgers.education-services.ru"
 LOGIN_URL = f"{BASE_URL}/login"
 API_URL = f"{BASE_URL}/api"
+RESET_PASSWORD_URL = f"{BASE_URL}/reset-password"
 
 # Таймауты
 DEFAULT_TIMEOUT = 10

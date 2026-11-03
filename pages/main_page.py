@@ -1,6 +1,7 @@
 import allure
-from pages.base_page import BasePage
+
 from locators.locators import MainPageLocators
+from pages.base_page import BasePage
 
 
 class MainPage(BasePage):
@@ -12,23 +13,19 @@ class MainPage(BasePage):
 
     @allure.step("Нажать на 'Конструктор'")
     def click_constructor(self):
-        element = self.wait_for_element_visible(self.locators.CONSTRUCTOR_BUTTON)
-        self.driver.execute_script("arguments[0].click();", element)
+        self.click_element(self.locators.CONSTRUCTOR_BUTTON)
 
     @allure.step("Нажать на 'Лента заказов'")
     def click_order_feed(self):
-        element = self.wait_for_element_visible(self.locators.ORDER_FEED_BUTTON)
-        self.driver.execute_script("arguments[0].click();", element)
+        self.click_element(self.locators.ORDER_FEED_BUTTON)
 
     @allure.step("Нажать на 'Личный кабинет'")
     def click_profile(self):
-        element = self.wait_for_element_visible(self.locators.PROFILE_BUTTON)
-        self.driver.execute_script("arguments[0].click();", element)
+        self.click_element(self.locators.PROFILE_BUTTON)
 
     @allure.step("Кликнуть на булочку (открывает модалку)")
     def click_first_ingredient(self):
-        element = self.wait_for_element_visible(self.locators.BUN_INGREDIENT)
-        self.driver.execute_script("arguments[0].click();", element)
+        self.click_element(self.locators.BUN_INGREDIENT)
         self.wait_for_element_visible(self.locators.INGREDIENT_MODAL)
 
     @allure.step("Добавить булочку в заказ")
@@ -47,18 +44,15 @@ class MainPage(BasePage):
 
     @allure.step("Закрыть модальное окно")
     def close_ingredient_modal(self):
-        close_btn = self.wait_for_element_visible(self.locators.INGREDIENT_MODAL_CLOSE)
-        self.driver.execute_script("arguments[0].click();", close_btn)
+        self.click_element(self.locators.INGREDIENT_MODAL_CLOSE)
 
     @allure.step("Проверить, что модальное окно открыто")
     def is_ingredient_modal_open(self):
-        elements = self.driver.find_elements(*self.locators.INGREDIENT_MODAL)
-        return len(elements) > 0
+        return self.count_elements(self.locators.INGREDIENT_MODAL) > 0
 
     @allure.step("Проверить, что модальное окно закрыто")
     def is_ingredient_modal_closed(self):
-        elements = self.driver.find_elements(*self.locators.INGREDIENT_MODAL)
-        return len(elements) == 0
+        return self.count_elements(self.locators.INGREDIENT_MODAL) == 0
 
     @allure.step("Получить счётчик ингредиента")
     def get_ingredient_counter(self, ingredient_type="bun"):
@@ -75,20 +69,17 @@ class MainPage(BasePage):
 
     @allure.step("Нажать кнопку 'Оформить заказ'")
     def click_place_order(self):
-        element = self.wait_for_element_visible(self.locators.PLACE_ORDER_BUTTON)
-        self.driver.execute_script("arguments[0].click();", element)
+        self.click_element(self.locators.PLACE_ORDER_BUTTON)
         self.wait_for_element_visible(self.locators.ORDER_NUMBER_MODAL)
+
+    @allure.step("Получить номер заказа из модалки")
+    def get_order_number(self):
+        return self.get_text(self.locators.ORDER_NUMBER)
 
     @allure.step("Закрыть модалку с номером заказа")
     def close_order_modal(self):
-        close_btn = self.wait_for_element_visible(self.locators.ORDER_NUMBER_MODAL_CLOSE)
-        self.driver.execute_script("arguments[0].click();", close_btn) 
+        self.click_element(self.locators.ORDER_NUMBER_MODAL_CLOSE)
 
     @allure.step("Проверить, что модалка с номером заказа открыта")
     def is_order_modal_open(self):
         return self.is_element_displayed(self.locators.ORDER_NUMBER_MODAL)
-
-    @allure.step("Получить номер заказа из модалки")
-    def get_order_number(self):
-        element = self.wait_for_element_visible(self.locators.ORDER_NUMBER)
-        return element.text

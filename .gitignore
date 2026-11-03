@@ -1,5 +1,24 @@
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+
+# Pytest
 .pytest_cache/
+.coverage
+htmlcov/
+
+# Allure — сырые результаты не нужны
+allure-results/
+allure-results-chrome/
+allure-results-firefox/
+
+# IDE
 .vscode/
 .idea/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -5,9 +5,9 @@ class LoginPageLocators:
     """Локаторы страницы входа"""
     EMAIL_INPUT = (By.CSS_SELECTOR, "input[name='name']")
     PASSWORD_INPUT = (By.CSS_SELECTOR, "input[name='Пароль']")
+    SHOW_PASSWORD_BUTTON = (By.CSS_SELECTOR, "div.input__icon-action")
     LOGIN_BUTTON = (By.XPATH, "//button[text()='Войти']")
-    FORGOT_PASSWORD_LINK = (By.XPATH, "//a[@href='/forgot-password']")
-    REGISTER_LINK = (By.XPATH, "//a[@href='/register']")
+    FORGOT_PASSWORD_LINK = (By.XPATH, "//a[text()='Восстановить пароль']")
 
 
 class MainPageLocators:
